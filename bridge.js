@@ -1,4 +1,4 @@
-require('dotenv').config(); // Muat variabel lingkungan
+require('dotenv').config();
 
 const { ethers } = require("ethers");
 
@@ -14,15 +14,25 @@ const wallet = new ethers.Wallet(privateKey);
 const signer = wallet.connect(provider);
 
 const bridgeABI = [
-    // ABI yang relevan untuk fungsi bridge
-    "function bridge(address to, uint256 amount) external"
+    {
+        "inputs": [
+            { "internalType": "address", "name": "to", "type": "address" },
+            { "internalType": "uint256", "name": "amount", "type": "uint256" }
+        ],
+        "name": "bridge",
+        "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
 ];
 
 const bridgeContract = new ethers.Contract(bridgeContractAddress, bridgeABI, signer);
 
 async function bridgeTokens(toAddress, amount) {
     try {
-        const tx = await bridgeContract.bridge(toAddress, amount);
+        const tx = await bridgeContract.bridge(toAddress, amount, {
+            gasLimit: 500000 // Sesuaikan jika diperlukan
+        });
         console.log(`Transaksi dimulai: ${tx.hash}`);
 
         // Tunggu konfirmasi transaksi

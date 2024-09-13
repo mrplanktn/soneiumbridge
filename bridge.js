@@ -7,7 +7,7 @@ const soneiumRPC = process.env.RPC_URL;
 const bridgeContractAddress = process.env.BRIDGE_CONTRACT_ADDRESS;
 const privateKey = process.env.PRIVATE_KEY;
 const toAddress = process.env.TO_ADDRESS;
-const amount = ethers.parseUnits("100", 18); // Ganti jumlah token sesuai kebutuhan
+const amount = ethers.parseUnits("0.01", 18); // Ganti jumlah token sesuai kebutuhan
 
 const provider = new ethers.JsonRpcProvider(soneiumRPC);
 const wallet = new ethers.Wallet(privateKey);
